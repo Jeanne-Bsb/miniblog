@@ -1,0 +1,45 @@
+header{
+    height: 30vh;
+    border: 3px solid black;
+}
+h1{
+    text-align: center;
+}
+main{
+    display: flex;
+}
+.icon{
+    background-color: rgb(210, 210, 210);
+    width: 30px;
+    height: 30px;
+}
+.photo{
+    background-color: rgb(210, 210, 210);
+    width: 250px;
+    height: 250px;
+}
+.profil{
+    width: 260px;
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid black;
+}
+main{
+    margin: 20px;
+}
+.post{
+    border: 3px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+.image{
+    width: 80%;
+    height: 20vh;
+    background-color: rgb(210, 210, 210);
+}
+nav{
+    width: 15vw;
+    padding: 10px;
+    margin: 10px;
+    border: 3px solid black;
+}

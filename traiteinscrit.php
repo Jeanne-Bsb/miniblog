@@ -12,7 +12,6 @@ $stmt->bindParam(':prenom',$_GET["prenom"] , PDO::PARAM_STR);
 $hash= password_hash($_GET["pwd"],PASSWORD_DEFAULT);
 $stmt->bindParam(':mdp',$hash , PDO::PARAM_STR); 
 $stmt->execute();
-echo "L inscription s est bien deroulee<br>";
-echo '<br><a href="affiche_utilisateur.php">afficher les utilisateurs</a>';
-
+echo "L inscription s est bien deroulee<br>
+";
 ?>

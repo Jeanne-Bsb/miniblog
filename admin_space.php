@@ -1,5 +1,6 @@
 <?php 
 session_start();
+require("model.php");
 include("head.php");
 ?>
 <?php if(isset($_SESSION['login']) && $_SESSION['login']=="toto@gmail.com") :?>
@@ -28,7 +29,7 @@ include("head.php");
                     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach($resultat as $post):?>
                 <div class='post'>
-                    <h3><?=$post["date"]?></h3>
+                    <h3><?=dateFr($post["date"])?></h3>
                     <p><?=$post["text"]?></p>
                     <a href='affiche-commentaire.php?id=<?=$post["id"]?>'>Commentaires</a>
                 </div>

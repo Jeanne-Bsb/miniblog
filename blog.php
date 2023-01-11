@@ -25,10 +25,11 @@ include("head.php");
             $resultat=AfficheTroisPost();
             foreach($resultat as $post) :?>
                 <div class='post' id=<?=$post["id"]?>>
-                    <h3><?=$post["date"]?></h3>
+                    <h3><?=dateFr($post["date"])?></h3>
                     <p><?=$post["text"]?></p>
                     <a href='affiche-commentaire.php?id={$post["id"]}'>Commentaires</a>
                 </div>
+            <?php endforeach?>
             
             <a href="archive.php">Archives</a>
             <?php if(isset($_SESSION['login']) && $_SESSION['login']=="toto@gmail.com") :?>

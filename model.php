@@ -20,4 +20,10 @@ function AfficheAllPost(){
     $data=$stmt->fetchall(PDO::FETCH_ASSOC);
     return $data;
 }
+function dateFr($date1){
+    list($date, $time) = explode(" ", $date1);
+    list($year, $month, $day) = explode("-", $date);
+    list($hour, $min, $sec) = explode(":", $time);
+    return $date1 = "$day/$month/$year $hour"."h"."$min";
+}
 ?>

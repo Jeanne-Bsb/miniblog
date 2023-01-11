@@ -31,7 +31,7 @@ include("head.php");
             $resultatPost=AfficheUnPost($numero);
             foreach($resultatPost as $post):?>
                 <div class='post' id=<?=$post["id"]?>>
-                    <h3><?=$post["date"]?></h3>
+                    <h3><?=dateFr($post["date"])?></h3>
                     <p><?=$post["text"]?></p>
             <?php endforeach?>
             <section class="coms">
@@ -39,13 +39,12 @@ include("head.php");
                 $requete="SELECT * FROM commentaire,utilisateur WHERE postcom = $numero AND id_personne=autor";
                 $stmt=$db->query($requete);
                 $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                foreach($resultat as $com){
-                    echo "<div class='com' id={$com["idcom"]}>
-                            <h3>{$com["datecom"]} {$com["prenom"]} {$com["nom"]}</h3>
-                            <p>{$com["textcom"]}</p>
-                        </div>";
-                };
-            ?>
+                foreach($resultat as $com):?>
+                    <div class='com' id="<?=$com["idcom"]?>">
+                        <h3><?=dateFr($com["datecom"])?> <?=$com["prenom"]?> <?=$com["nom"]?></h3>
+                        <p><?=$com["textcom"]?></p>
+                    </div>
+                <?php endforeach?>
             
             </section>
             <section class="post">

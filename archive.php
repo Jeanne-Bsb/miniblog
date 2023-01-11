@@ -1,16 +1,11 @@
 <?php 
 session_start();
+require("model.php");
 include("head.php");
 ?>
     <title>Blog</title>
 </head>
 <body>
-    <?php
-    include("connexion.php");
-    $requete="SELECT * FROM posts ORDER BY date DESC";
-    $stmt=$db->query($requete);
-    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-    ?>
     <header>
         <div class="menu">
         <?php if(isset($_SESSION['login']) && $_SESSION['login'] !== null) :?>
@@ -39,14 +34,14 @@ include("head.php");
         <section class="posts">
             <h2>Posts :</h2>
             <?php
-            foreach($resultat as $post){
-                echo "<div class='post' id={$post["id"]}>
-                        <h3>{$post["date"]}</h3>
-                        <p>{$post["text"]}</p>
-                        <a href='affiche-commentaire.php?id={$post["id"]}'>Commentaires</a>
-                    </div>";
-            };
-            ?>
+            $resultat=AfficheAllPost();
+            foreach($resultat as $post):?>
+                <div class='post' id='<?=$post["id"]?>'>
+                    <h3><?=dateFr($post["date"])?></h3>
+                    <p><?=$post["text"]?></p>
+                    <a href='affiche-commentaire.php?id=<?=$post["id"]?>'>Commentaires</a>
+                </div>
+            <?php endforeach?>
         </section>
         <nav>
             <a href="#1">28 mai 2022, 16h22</a><br>

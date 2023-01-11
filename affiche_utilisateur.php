@@ -13,7 +13,7 @@
     { 
     echo "Bonjour {$_SESSION["login"]}<BR>";
     }
-    $db =new PDO('mysql:host=localhost;dbname=mmiun;port=3306;charset=utf8','root', '');
+    include("connexion.php")
     $requete="SELECT * FROM utilisateur";
     $stmt=$db->query($requete);
     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);

@@ -1,50 +1,73 @@
 <?php 
 session_start();
+require("model.php");
+include("head.php");
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commentaire</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="script" href="script.js" defer>
 </head>
 <body>
     <?php
-    $db=new PDO('mysql:host=localhost;dbname=mmiun;port=3306;charset=utf8', 'root', '');
-    /* $requete= "SELECT * FROM `posts`,`commentaire` WHERE commentaire.`post-com`=`posts`.`id` AND ;"; */
-    $requete="SELECT * FROM posts";
-    $stmt=$db->query($requete);
-    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+    include("connexion.php")
     ?>
     <header>
         <div class="menu">
-            <!-- <a href="login.php"><img src="img/account_circle.svg" alt=""></a> -->
+        <?php if(isset($_SESSION['login'])) :?>
+            <a href="logout.php">Se déconnecter</a>
+        <?php else : ?>
             <a href="login.php">Se connecter</a>
             <a href="inscription.php">S'inscrire</a>
+        <?php endif?>
         </div>
         <h1>Titre du blog</h1>
     </header>
+    <a href="blog.php">< Retour</a>
     <main>
         <section class="profil">
         </section>
         <section class="posts">
-            <h2>Posts :</h2>
+            <h2>Post :</h2>
             <?php
-            foreach($resultat as $post){
-                echo "<div class='post' id={$post["id"]}>
-                        <h3>{$post["date"]}</h3>
-                        <p>{$post["text"]}</p>
-                    </div>";
-            };
+            $numero= $_GET["id"];
+            $resultatPost=AfficheUnPost($numero);
+            foreach($resultatPost as $post):?>
+                <div class='post' id=<?=$post["id"]?>>
+                    <h3><?=$post["date"]?></h3>
+                    <p><?=$post["text"]?></p>
+            <?php endforeach?>
+            <section class="coms">
+                <?php
+                $requete="SELECT * FROM commentaire,utilisateur WHERE postcom = $numero AND id_personne=autor";
+                $stmt=$db->query($requete);
+                $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                foreach($resultat as $com){
+                    echo "<div class='com' id={$com["idcom"]}>
+                            <h3>{$com["datecom"]} {$com["prenom"]} {$com["nom"]}</h3>
+                            <p>{$com["textcom"]}</p>
+                        </div>";
+                };
             ?>
+            
+            </section>
+            <section class="post">
+                <h3>Poster un commentaire :</h3>
+                <?php
+                if(isset($_SESSION["login"])) :?>
+                    <form action="traitecomment.php" method="post">
+                    <textarea name="text" id="text" ></textarea>
+                    <input type="hidden" id="autor" name="autor" value="<?php echo $_SESSION['id']?>">
+                    <input type="hidden" id="post" name="post" value="<?php echo $numero?>">
+                    <button>Publier</button>
+                    </form>
+                <?php else : ?>
+                    <a href="login.php">Se connecter</a>
+                    <p>OU</p>
+                    <a href="inscription.php">S'inscrire</a>
+                <?php endif?>
+            </section>
+            </div>
+            
         </section>
         <nav>
-            <a href="#1">28 mai 2022, 16h22</a><br>
-            <a href="#2">2 mars 2022, 8h54</a><br>
-            <a href="#3">2 mars 2022, 6h31</a><br>
         </nav>
     </main>
     <footer>

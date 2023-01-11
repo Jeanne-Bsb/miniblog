@@ -1,10 +1,8 @@
 <?php 
 session_start();
+include("head.php");
 ?>
 
-<html>
-<head>
-	<meta charset="UTF-8">
 </head>
 
 <body>

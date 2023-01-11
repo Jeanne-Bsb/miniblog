@@ -1,3 +1,6 @@
+body{
+    font-family: sans-serif;
+}
 header{
     height: 30vh;
     border: 3px solid black;
@@ -19,7 +22,7 @@ main{
     height: 250px;
 }
 .profil{
-    width: 260px;
+    width: 20vw;
     margin: 10px;
     padding: 10px;
     border: 3px solid black;
@@ -29,6 +32,11 @@ main{
 }
 .post{
     border: 3px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+.coms{
+    border: 3px solid #aaaaaa;
     padding: 10px;
     margin: 10px;
 }

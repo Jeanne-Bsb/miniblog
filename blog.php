@@ -1,55 +1,46 @@
 <?php 
 session_start();
+require("model.php");
+include("head.php");
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="script" href="script.js" defer>
 </head>
 <body>
-    <?php
-    $db=new PDO('mysql:host=localhost;dbname=mmiun;port=3306;charset=utf8', 'root', '');
-    /* $requete= "SELECT * FROM `posts`,`commentaire` WHERE commentaire.`post-com`=`posts`.`id` AND ;"; */
-    $requete="SELECT * FROM posts";
-    $stmt=$db->query($requete);
-    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-    ?>
     <header>
         <div class="menu">
-            <!-- <a href="login.php"><img src="img/account_circle.svg" alt=""></a> -->
+        <?php if(isset($_SESSION['login'])) :?>
+            <a href="logout.php">Se déconnecter</a>
+        <?php else : ?>
             <a href="login.php">Se connecter</a>
             <a href="inscription.php">S'inscrire</a>
+        <?php endif?>
         </div>
         <h1>Titre du blog</h1>
     </header>
     <main>
-        <section class="profil">
-            <div class="photo"></div>
-            <h2>Name</h2>
-            <p>Logoden biniou. C’haier Gwaien. Degemer glac’har. Porzh flourañ. Ar Releg-Kerhuon Nazer. Talvezout hegarat. Roazhon merenn. Buhez froud. Ker bodet. Kuit bloaz.</p>
-            <h3>Join me on</h3>
-            <ul>
-                <li><div class="icon"></div>Instagram</li>
-                <li><div class="icon"></div>Linkedin</li>
-                <li><div class="icon"></div>Github</li>
-                <li><div class="icon"></div>By mail</li>
-            </ul>
-        </section>
+        <?php include("profil.php")?>
         <section class="posts">
             <h2>Posts :</h2>
             <?php
-            foreach($resultat as $post){
-                echo "<div class='post' id={$post["id"]}>
-                        <h3>{$post["date"]}</h3>
-                        <p>{$post["text"]}</p>
-                    </div>";
-            };
-            ?>
+            $resultat=AfficheTroisPost();
+            foreach($resultat as $post) :?>
+                <div class='post' id=<?=$post["id"]?>>
+                    <h3><?=$post["date"]?></h3>
+                    <p><?=$post["text"]?></p>
+                    <a href='affiche-commentaire.php?id={$post["id"]}'>Commentaires</a>
+                </div>
+            
+            <a href="archive.php">Archives</a>
+            <?php if(isset($_SESSION['login']) && $_SESSION['login']=="toto@gmail.com") :?>
+            <div>
+                <h2>Publier un post</h2>
+                    <form action="traiteposter.php" method="post">
+                        <textarea name="text" id="text" ></textarea>
+                        <button>Valider</button>
+                    </form>
+            </div>
+        <a href="admin_space.php">Gérer le blog</a>
+        <?php endif?>
         </section>
         <nav>
             <a href="#1">28 mai 2022, 16h22</a><br>

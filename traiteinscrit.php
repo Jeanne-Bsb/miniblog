@@ -1,6 +1,6 @@
 <?php
 session_start();
-$db=new PDO('mysql:host=localhost;dbname=mmiun;port=3306;charset=utf8', 'root', '');
+include("connexion.php")
 
 $requete= "INSERT INTO utilisateur VALUES (NULL,:nom,:prenom,:login,:mdp)";
 
